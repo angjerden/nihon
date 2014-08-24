@@ -1,9 +1,40 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="utf-8">
+        <title>Nihon</title>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+        <style type="text/css">
+        </style>
     </head>
     <body>
+        <img id="main-image" src="" height="400px" width="400px"/>
+        <footer>
+            <button onclick="imageback(); ">
+                <span class="glyphicon glyphicon-step-backward"></span> Back
+            </button>
+            <button onclick="imageforward(); ">
+                <span class="glyphicon glyphicon-step-forward"></span> Forward
+            </button>
+        </footer>
 
+        <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+        <script src="nihon.js"></script>
+
+        <script>
+            $(document).ready (function() {
+                console.log("Ready function called.");
+                loadJSONMedia();
+                //$("main-image").src = ""
+            });
+        </script>
     </body>
 </html>
