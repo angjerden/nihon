@@ -1,21 +1,35 @@
-var images;
+var current = 0;
+var that = this;
 
-function loadJSONMedia() {
-    console.log("loadJSONMedia called.");
-    $.getJSON("images.json", function(data) {
-        console.log("Inside getJSON-function");
-        images = data;
-        console.log("data: " + images[0].filename);
-    });
-    console.log("Images[0]: " + images[0]);
+function setInitialImage() {
+    console.log("Inside setInitialImage");
+    setCurrentImg();
 }
 
 function imageback() {
-    console.log("imageback called");
-    $("#main-image").attr("src", "res/20140804_071725.jpg");
+    console.log("imageback");
+    console.log("Current: " + that.current);
+    if(that.current > 0) {
+        that.current = that.current - 1;
+        setCurrentImg();
+    }
 }
 
 function imageforward() {
-    console.log("imageforward called");
-    $("#main-image").attr("src", "res/P8036881.JPG")
+    console.log("imageforward");
+    console.log("Current: " + that.current);
+    console.log("Images.length: " + images.length);
+    if(that.current < images.length - 1){
+        that.current = that.current + 1;
+        setCurrentImg()
+    }
+}
+
+function setCurrentImg() {
+    logImageSrc()
+    $("#main-image").attr("src", images[that.current].filename);
+}
+
+function logImageSrc() {
+    console.log("Setting image src to: " + images[that.current].filename);
 }
