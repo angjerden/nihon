@@ -5,18 +5,13 @@
         <title>Nihon</title>
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-
         <!-- Optional theme -->
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-
-        <!--<script src="http://jquery-imagefit-plugin.googlecode.com/svn/trunk/jquery.imagefit-0.2.js"></script>-->
-
-        <style type="text/css">
-        </style>
+        <link href="custom.css" rel="stylesheet" media="screen">
     </head>
     <body>
-        <div>
-            <img style="width: 500px; height: 500px;" id="main-image" src=""/>
+        <div class="container">
+            <img id="main-image" src=""/>
         </div>
         <footer>
             <button onclick="imageback(); ">
@@ -28,16 +23,22 @@
         </footer>
 
         <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
-        <!-- Latest compiled and minified JavaScript -->
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
         <script src="images.js"></script>
         <script src="nihon.js"></script>
 
         <script>
             $(document).ready (function() {
-                console.log("Ready function called.");
-                setInitialImage();
+                setCurrentImg();
             });
+
+            $(window).load(function() {
+                rescaleImg();
+            });
+
+            $(window).resize(function(){
+                rescaleImg();
+            })
         </script>
     </body>
 </html>

@@ -1,14 +1,7 @@
 var current = 0;
 var that = this;
 
-function setInitialImage() {
-    console.log("Inside setInitialImage");
-    setCurrentImg();
-}
-
 function imageback() {
-    console.log("imageback");
-    console.log("Current: " + that.current);
     if(that.current > 0) {
         that.current = that.current - 1;
         setCurrentImg();
@@ -16,9 +9,6 @@ function imageback() {
 }
 
 function imageforward() {
-    console.log("imageforward");
-    console.log("Current: " + that.current);
-    console.log("Images.length: " + images.length);
     if(that.current < images.length - 1){
         that.current = that.current + 1;
         setCurrentImg()
@@ -26,10 +16,33 @@ function imageforward() {
 }
 
 function setCurrentImg() {
-    logImageSrc()
-    $("#main-image").attr("src", images[that.current].filename);
+    //logImageSrc()
+    $("#main-image").removeAttr('style');
+    $("#main-image").attr("src", images[current].filename);
+    rescaleImg();
 }
 
 function logImageSrc() {
     console.log("Setting image src to: " + images[that.current].filename);
+}
+
+function rescaleImg() {
+    var image = $('#main-image');
+    var wwidth = $(window).width();
+    var wheight = $(window).height();
+    var iwidth = image.width();
+    var iheight = image.height();
+    var factor = Math.min(wwidth/iwidth, wheight/iheight);
+    var iwidthR = Math.round(iwidth * factor);
+    var iheightR = Math.round(iheight * factor);
+    var iwidthR2 = Math.round(wwidth - iwidthR)/2;
+    var iheightR2 = Math.round(wheight - iheightR)/2;
+
+    image.css({
+        'position':'fixed',
+        'width': iwidthR,
+        'height': iheightR,
+        'left': iwidthR2,
+        'top': iheightR2
+    });
 }
