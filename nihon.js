@@ -1,14 +1,14 @@
 var current = 0;
 var that = this;
 
-function imageback() {
+function back() {
     if(that.current > 0) {
         that.current = that.current - 1;
         setCurrentImg();
     }
 }
 
-function imageforward() {
+function forward() {
     if(that.current < images.length - 1){
         that.current = that.current + 1;
         setCurrentImg()
@@ -18,8 +18,10 @@ function imageforward() {
 function setCurrentImg() {
     //logImageSrc()
     $("#main-image").removeAttr('style');
-    $("#main-image").attr("src", images[current].filename);
-    rescaleImg();
+    $("#main-image").one("load", function() {
+        rescaleImg(); //rescaling after load is finished
+    }).attr("src", images[current].filename);
+
 }
 
 function logImageSrc() {

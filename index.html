@@ -14,16 +14,28 @@
             <img id="main-image" src=""/>
         </div>
         <footer>
-            <button onclick="imageback(); ">
+            <button onclick="back(); ">
                 <span class="glyphicon glyphicon-step-backward"></span> Back
             </button>
-            <button onclick="imageforward(); ">
+            <button onclick="forward(); ">
                 <span class="glyphicon glyphicon-step-forward"></span> Forward
             </button>
         </footer>
 
+        <nav class="navbar navbar-inverse navbar-fixed-bottom"
+             role="navigation">
+            <ul class="nav navbar-nav">
+                <li class="pull-left"><a href="#" onclick="back();"><span class="glyphicon glyphicon-step-backward"></span>Back</a></li>
+                <li class="pull-right"><a href="#"  onclick="forward();"><span class="glyphicon glyphicon-step-forward"></span>Forward</a></li>
+                <li class="navbar-right"><a href="#"><span class="glyphicon glyphicon-camera"></span>Photos</a></li>
+                <li class="pull-right"><a href="#"><span class="glyphicon glyphicon-map-marker"></span>Map</a></li>
+                <li class="pull-right"><a href="#"><span class="glyphicon glyphicon-music"></span>Sounds</a></li>
+                <li class="pull-right"><a href="#"><span class="glyphicon glyphicon-film"></span>Videos</a></li>
+            </ul>
+        </nav>
+
         <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
-        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
         <script src="images.js"></script>
         <script src="nihon.js"></script>
 
