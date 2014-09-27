@@ -17,4 +17,4 @@ var images = [
         "description": "With Toshiki and Joachim",
         "mediagroup": 1
     }
-]
+];

@@ -21,7 +21,8 @@ function setCurrentImg() {
     $("#main-image").one("load", function() {
         rescaleImg(); //rescaling after load is finished
     }).attr("src", images[current].filename);
-
+    $("#imageindex").html((current + 1) + "/" + images.length);
+    setMediaGroup(images[current].mediagroup);
 }
 
 function logImageSrc() {
@@ -47,4 +48,33 @@ function rescaleImg() {
         'left': iwidthR2,
         'top': iheightR2
     });
+}
+
+function setMediaGroup(mediagroup) {
+    $("#soundmenu").html("");
+    $("#videomenu").html("");
+    for (var i = 0; i < media.length; i++) {
+        var mediaElement = media[i];
+        if (mediaElement.mediagroup == mediagroup) {
+            for (var soundindex = 0; soundindex < mediaElement.sounds.length; soundindex++) {
+                var soundElement = mediaElement.sounds[soundindex];
+                $("#soundmenu").append("" +
+                    "<li class=\"navbar-text\">" +
+                    "<span class=\"glyphicon glyphicon-play\"></span>" +
+                    "<span class=\"glyphicon glyphicon-stop\"></span>" +
+                        soundElement.title +
+                    "</li>");
+            }
+            for (var videoindex = 0; videoindex < mediaElement.videos.length; videoindex++) {
+                var videoElement = mediaElement.videos[videoindex];
+                $("#videomenu").append("" +
+                    "<li class=\"navbar-text\">" +
+                    "<span class=\"glyphicon glyphicon-play\"></span>" +
+                    "<span class=\"glyphicon glyphicon-stop\"></span>" +
+                        videoElement.title +
+                    "</li>");
+            }
+        }
+    }
+
 }

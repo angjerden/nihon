@@ -13,30 +13,47 @@
         <div class="container">
             <img id="main-image" src=""/>
         </div>
-        <footer>
-            <button onclick="back(); ">
-                <span class="glyphicon glyphicon-step-backward"></span> Back
-            </button>
-            <button onclick="forward(); ">
-                <span class="glyphicon glyphicon-step-forward"></span> Forward
-            </button>
-        </footer>
 
         <nav class="navbar navbar-inverse navbar-fixed-bottom"
              role="navigation">
-            <ul class="nav navbar-nav">
-                <li class="pull-left"><a href="#" onclick="back();"><span class="glyphicon glyphicon-step-backward"></span>Back</a></li>
-                <li class="pull-right"><a href="#"  onclick="forward();"><span class="glyphicon glyphicon-step-forward"></span>Forward</a></li>
-                <li class="navbar-right"><a href="#"><span class="glyphicon glyphicon-camera"></span>Photos</a></li>
-                <li class="pull-right"><a href="#"><span class="glyphicon glyphicon-map-marker"></span>Map</a></li>
-                <li class="pull-right"><a href="#"><span class="glyphicon glyphicon-music"></span>Sounds</a></li>
-                <li class="pull-right"><a href="#"><span class="glyphicon glyphicon-film"></span>Videos</a></li>
+            <ul class="nav navbar-nav navbar-left">
+                <li><div id="imageindex" class="navbar-text"></div></li>
+                <li><a href="#" onclick="back();"><span class="glyphicon glyphicon-step-backward"></span>Back</a></li>
+                <li><a href="#" onclick="forward();"><span class="glyphicon glyphicon-step-forward"></span>Forward</a></li>
+            </ul>
+            <div class="nav navbar-nav">
+                <h4 class="navbar-text">Hallo!</h4>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#"><span class="glyphicon glyphicon-camera"></span>Photos</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-map-marker"></span>Map</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-music"></span>Sounds
+                    </a>
+                    <ul id="soundmenu" class="navbar-inverse dropdown-menu dropup" role="menu">
+                        <li class="navbar-text">Sound 1</li>
+                        <li class="navbar-text">Sound 2</li>
+                        <li class="navbar-text">Sound 3</li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-film"></span>Videos
+                    </a>
+                    <ul id="videomenu" class="navbar-inverse dropdown-menu dropup" role="menu">
+                        <li class="navbar-text">Video 1</li>
+                        <li class="navbar-text">Video 2</li>
+                        <li class="navbar-text">Video 3</li>
+                    </ul>
+                </li>
             </ul>
         </nav>
 
         <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
         <script src="images.js"></script>
+        <script src="media.js"></script>
         <script src="nihon.js"></script>
 
         <script>
