@@ -1,32 +1,32 @@
-var current = 0;
-var that = this;
+var current = 0; //current image to be shown
+
 
 function back() {
-    if(that.current > 0) {
-        that.current = that.current - 1;
+    if(current > 0) {
+        current = current - 1;
         setCurrentImg();
     }
 }
 
 function forward() {
-    if(that.current < images.length - 1){
-        that.current = that.current + 1;
+    if(current < images.length - 1){
+        current = current + 1;
         setCurrentImg()
     }
 }
 
 function setCurrentImg() {
-    //logImageSrc()
+    $("title").text(pagetitle);
+    var image = images[current];
     $("#main-image").removeAttr('style');
     $("#main-image").one("load", function() {
         rescaleImg(); //rescaling after load is finished
-    }).attr("src", images[current].filename);
+    }).attr("src", image.filename);
     $("#imageindex").html((current + 1) + "/" + images.length);
-    setMediaGroup(images[current].mediagroup);
-}
-
-function logImageSrc() {
-    console.log("Setting image src to: " + images[that.current].filename);
+    //$("#info").tooltipster(image.description, image.description);
+    $("#title").html(image.title);
+    //$(".tooltip").tooltipster();
+    setMediaGroup(image.mediagroup);
 }
 
 function rescaleImg() {
@@ -58,23 +58,53 @@ function setMediaGroup(mediagroup) {
         if (mediaElement.mediagroup == mediagroup) {
             for (var soundindex = 0; soundindex < mediaElement.sounds.length; soundindex++) {
                 var soundElement = mediaElement.sounds[soundindex];
-                $("#soundmenu").append("" +
-                    "<li class=\"navbar-text\">" +
-                    "<span class=\"glyphicon glyphicon-play\"></span>" +
-                    "<span class=\"glyphicon glyphicon-stop\"></span>" +
-                        soundElement.title +
-                    "</li>");
+                var audiotype = getAudioType(soundElement.filename);
+                $("#soundmenu").append("<h6 class=\"navbar-text\">" + soundElement.title + "</h6>" +
+                        "<audio controls>" +
+                            "<source src=\"" +  soundElement.filename +
+                            "\" type=\"" + audiotype + "\">" +
+                        "</audio>");
             }
             for (var videoindex = 0; videoindex < mediaElement.videos.length; videoindex++) {
                 var videoElement = mediaElement.videos[videoindex];
-                $("#videomenu").append("" +
-                    "<li class=\"navbar-text\">" +
-                    "<span class=\"glyphicon glyphicon-play\"></span>" +
-                    "<span class=\"glyphicon glyphicon-stop\"></span>" +
-                        videoElement.title +
-                    "</li>");
+                var videotype = getVideoType(videoElement.filename);
+                $("#videomenu").append("<h6 class=\"navbar-text\">" + videoElement.title + "</h6>" +
+                    "<video width=\"320\" height=\"240\" controls>" +
+                    "<source src=\"" +  videoElement.filename +
+                    "\" type=\"" + videotype + "\">" +
+                    "</video>");
             }
         }
     }
+}
 
+function getAudioType(filename) {
+    if (filename.contains(".ogg")) {
+        return AudioType.OGG;
+    }
+    if (filename.contains("mp3")) {
+        return AudioType.MP3;
+    }
+}
+
+function getVideoType(filename) {
+    if (filename.contains(".ogg")) {
+        return VideoType.OGG;
+    }
+    if (filename.contains("mp4")) {
+        return VideoType.MP4;
+    }
+}
+
+function unsetDropdownHiding() {
+    $('#sounddropdown .dropdown-menu').on({
+        "click": function(e) {
+            e.stopPropagation();
+        }
+    });
+    $('#videodropdown .dropdown-menu').on({
+        "click": function(e) {
+            e.stopPropagation();
+        }
+    });
 }
