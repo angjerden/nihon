@@ -7,7 +7,6 @@
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <!-- Optional theme -->
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/tooltipster/3.0.5/css/tooltipster.min.css">
         <link href="custom.css" rel="stylesheet" media="screen">
     </head>
     <body>
@@ -19,11 +18,18 @@
         <nav class="navbar navbar-inverse navbar-fixed-bottom"
              role="navigation">
             <ul class="nav navbar-nav navbar-left">
-                <li><div id="imageindex" class="navbar-text"></div></li>
+                <li>
+                    <div class="navbar-text">
+                        <input id="imageindex" type="text" maxlength="3"/>
+                        <span id="imagestotal"></span>
+                    </div>
+                </li>
                 <li><a href="#" onclick="back();"><span class="glyphicon glyphicon-step-backward"></span>Back</a></li>
                 <li><a href="#" onclick="forward();"><span class="glyphicon glyphicon-step-forward"></span>Forward</a></li>
-                <li><a id="info" href="#" class="tooltip"
-                       title="This is a tooltip">
+                <li><a id="info"
+                       href="#"
+                       data-toggle="popover"
+                       data-content="Info popover">
                     <span class="glyphicon glyphicon-info-sign"></span>Info
                     </a>
                 </li>
@@ -32,8 +38,8 @@
                 <h4 id="imagetitle" class="navbar-text">Hallo!</h4>
             </div>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#"><span class="glyphicon glyphicon-camera"></span>Photos</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-map-marker"></span>Map</a></li>
+                <!--<li><a href="#"><span class="glyphicon glyphicon-camera"></span>Photos</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-map-marker"></span>Map</a></li>-->
                 <li id="sounddropdown" class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <span class="glyphicon glyphicon-music"></span>Sounds
@@ -69,7 +75,6 @@
                 initialize();
                 setCurrentImg();
                 unsetDropdownHiding();
-                $('.tooltip').tooltipster();
             });
 
             $(window).load(function() {

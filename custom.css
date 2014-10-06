@@ -14,3 +14,13 @@ body {
     left: 50%;
     transform: translate(-50%, -50%)
 }
+
+#imageindex {
+    width: 34px;
+}
+
+.popover {
+    background-color: #000000;
+    border-color: #1f1f1f;
+    color: #f0f0f0;
+}

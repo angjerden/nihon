@@ -2,6 +2,16 @@ var current = 0; //current image index to be shown
 
 function initialize() {
     $("title").text(pagetitle);
+    $("#imagestotal").text("/" + images.length);
+    $("#imageindex").keypress(function(e) {
+        handleImageIndexInput(e);
+    });
+    $("#info").popover({ //enabling info popover
+        trigger: 'click',
+        'placement': 'top',
+        container: 'body'
+    });
+
 }
 
 function back() {
@@ -18,9 +28,28 @@ function forward() {
     }
 }
 
+function setImageIndexToCurrent() {
+    $("#imageindex").val((current + 1));
+}
+
+function handleImageIndexInput(e) {
+    if (e.which == 13) {//Enter key
+        var inputIndex = $("#imageindex").val();
+        if (inputIndex > 0 && inputIndex <= images.length) {
+            current = inputIndex - 1;
+            setCurrentImg();
+        } else { //input index out of bounds
+            setImageIndexToCurrent();
+        }
+    }
+}
+
 function setCurrentImg() {
     //removing style because old style sometimes lags onto next picture
     $("#main-image").removeAttr('style');
+
+    //hiding info popover, in case it's already open
+    $("#info").popover('hide');
 
     showLoader();
 
@@ -28,12 +57,11 @@ function setCurrentImg() {
     $("#main-image").one("load", function() {
         rescaleImg(); //rescaling after load is finished
         hideLoader();
-    }).attr("src", image.filename);
-    $("#imageindex").html((current + 1) + "/" + images.length);
-    $("#imagetitle").html(image.title);
+    }).attr("src", imagepath + image.filename);
 
-    //$("#info").tooltipster(image.description, image.description);
-    //$(".tooltip").tooltipster();
+    setImageIndexToCurrent();
+    $("#info").attr("data-content", image.description);
+    $("#imagetitle").html(image.title);
 
     //setting sounds and videos
     setMediaGroup(image.mediagroup);
@@ -90,7 +118,7 @@ function setMediaGroup(mediagroup) {
                 var audiotype = getAudioType(soundElement.filename);
                 $("#soundmenu").append("<h6 class=\"navbar-text\">" + soundElement.title + "</h6>" +
                         "<audio controls>" +
-                            "<source src=\"" +  soundElement.filename +
+                            "<source src=\"" + audiopath + soundElement.filename +
                             "\" type=\"" + audiotype + "\">" +
                         "</audio>");
             }
@@ -99,7 +127,7 @@ function setMediaGroup(mediagroup) {
                 var videotype = getVideoType(videoElement.filename);
                 $("#videomenu").append("<h6 class=\"navbar-text\">" + videoElement.title + "</h6>" +
                     "<video width=\"320\" height=\"240\" controls>" +
-                    "<source src=\"" +  videoElement.filename +
+                    "<source src=\"" + videopath + videoElement.filename +
                     "\" type=\"" + videotype + "\">" +
                     "</video>");
             }
@@ -108,19 +136,19 @@ function setMediaGroup(mediagroup) {
 }
 
 function getAudioType(filename) {
-    if (filename.contains(".ogg")) {
+    if (filename.indexOf(".ogg") != -1) {
         return AudioType.OGG;
     }
-    if (filename.contains("mp3")) {
+    if (filename.indexOf("mp3") != -1) {
         return AudioType.MP3;
     }
 }
 
 function getVideoType(filename) {
-    if (filename.contains(".ogg")) {
+    if (filename.indexOf(".ogg") != -1) {
         return VideoType.OGG;
     }
-    if (filename.contains("mp4")) {
+    if (filename.indexOf("mp4") != -1) {
         return VideoType.MP4;
     }
 }

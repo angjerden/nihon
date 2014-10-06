@@ -6,7 +6,10 @@ var AudioType = {
 var VideoType = {
     OGG: "video/ogg",
     MP4: "video/mp4"
-}
+};
+
+var audiopath = "res/audio/";
+var videopath = "res/video/";
 
 var media = [
     {
@@ -14,21 +17,17 @@ var media = [
         "sounds": [
             {
                 "title": "T-bane fugl ogg",
-                "filename": "res/Tokyo T-bane fugl short.ogg"
+                "filename": "Tokyo T-bane fugl short.ogg"
             },
             {
                 "title": "T-bane fugl mp3",
-                "filename": "res/Tokyo T-bane fugl short.mp3"
+                "filename": "Tokyo T-bane fugl short.mp3"
             }
         ],
         "videos": [
             {
                 "title": "Cicadas",
-                "filename": "res/20140802_154207.mp4"
-            },
-            {
-                "title": "Cicadas 2",
-                "filename": "res/20140802_154207.mp4"
+                "filename": "20140802_154207.mp4"
             }
         ]
     },
@@ -37,13 +36,13 @@ var media = [
         "sounds": [
             {
                 "title": "Kudasai",
-                "filename": "/res/YELLOW GENERATION-Intro Tokyo short.ogg"
+                "filename": "YELLOW GENERATION-Intro Tokyo short.ogg"
             }
         ],
         "videos": [
             {
                 "title": "Hoho",
-                "filename": "res/hoho.mp4"
+                "filename": "hoho.mp4"
             }
         ]
     }
