@@ -1,5 +1,8 @@
-var current = 0; //current image to be shown
+var current = 0; //current image index to be shown
 
+function initialize() {
+    $("title").text(pagetitle);
+}
 
 function back() {
     if(current > 0) {
@@ -11,22 +14,48 @@ function back() {
 function forward() {
     if(current < images.length - 1){
         current = current + 1;
-        setCurrentImg()
+        setCurrentImg();
     }
 }
 
 function setCurrentImg() {
-    $("title").text(pagetitle);
-    var image = images[current];
+    //removing style because old style sometimes lags onto next picture
     $("#main-image").removeAttr('style');
+
+    showLoader();
+
+    var image = images[current];
     $("#main-image").one("load", function() {
         rescaleImg(); //rescaling after load is finished
+        hideLoader();
     }).attr("src", image.filename);
     $("#imageindex").html((current + 1) + "/" + images.length);
+    $("#imagetitle").html(image.title);
+
     //$("#info").tooltipster(image.description, image.description);
-    $("#title").html(image.title);
     //$(".tooltip").tooltipster();
+
+    //setting sounds and videos
     setMediaGroup(image.mediagroup);
+}
+
+function showLoader() {
+    $("#main-image").css({
+        display: 'none'
+    });
+    $("#loader").css({
+        display: 'block'
+    });
+}
+
+function hideLoader() {
+    $("#loader").css({
+        display: 'none'
+    });
+    $("#main-image").css({
+        display: 'block'
+    });
+
 }
 
 function rescaleImg() {
