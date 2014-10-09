@@ -1,6 +1,3 @@
-var pagetitle = "Japan 2014";
-var imagepath = "res/images/";
-
 var images = [
     {
         "title": "Tokyo Sky Tree",

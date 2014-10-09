@@ -1,16 +1,3 @@
-var AudioType = {
-    OGG: "audio/ogg",
-    MP3: "audio/mpeg"
-};
-
-var VideoType = {
-    OGG: "video/ogg",
-    MP4: "video/mp4"
-};
-
-var audiopath = "res/audio/";
-var videopath = "res/video/";
-
 var media = [
     {
         "mediagroup": 1,

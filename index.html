@@ -24,13 +24,13 @@
                         <span id="imagestotal"></span>
                     </div>
                 </li>
-                <li><a href="#" onclick="back();"><span class="glyphicon glyphicon-step-backward"></span>Back</a></li>
-                <li><a href="#" onclick="forward();"><span class="glyphicon glyphicon-step-forward"></span>Forward</a></li>
+                <li><a href="javascript:void(0)" id="back"><span class="glyphicon glyphicon-step-backward"></span>Back</a></li>
+                <li><a href="javascript:void(0)" id="forward"><span class="glyphicon glyphicon-step-forward"></span>Forward</a></li>
                 <li><a id="info"
-                       href="#"
+                       href="javascript:void(0)"
                        data-toggle="popover"
                        data-content="Info popover">
-                    <span class="glyphicon glyphicon-info-sign"></span>Info
+                        <span class="glyphicon glyphicon-info-sign"></span> Info
                     </a>
                 </li>
             </ul>
@@ -38,11 +38,19 @@
                 <h4 id="imagetitle" class="navbar-text">Hallo!</h4>
             </div>
             <ul class="nav navbar-nav navbar-right">
-                <!--<li><a href="#"><span class="glyphicon glyphicon-camera"></span>Photos</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-map-marker"></span>Map</a></li>-->
+                <!--<li><a href="javascript:void(0)"><span class="glyphicon glyphicon-camera"></span>Photos</a></li>
+                <li><a href="javascript:void(0)"><span class="glyphicon glyphicon-map-marker"></span>Map</a></li>-->
+                <li><a id="toggleautoplay"
+                       href="javascript:void(0)"
+                       data-toggle="tooltip"
+                       data-placement="top"
+                       title="Autoplay">
+                        <span id="toggleautoplayicon" class="glyphicon glyphicon-volume-off"></span>
+                    </a>
+                </li>
                 <li id="sounddropdown" class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <span class="glyphicon glyphicon-music"></span>Sounds
+                    <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-music"></span> Sounds
                     </a>
                     <ul id="soundmenu" class="navbar-inverse dropdown-menu dropup" role="menu">
                         <li class="navbar-text">Sound 1</li>
@@ -51,8 +59,8 @@
                     </ul>
                 </li>
                 <li id="videodropdown" class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <span class="glyphicon glyphicon-film"></span>Videos
+                    <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-film"></span> Videos
                     </a>
                     <ul id="videomenu" class="navbar-inverse dropdown-menu dropup" role="menu">
                         <li class="navbar-text">Video 1</li>
@@ -65,7 +73,6 @@
 
         <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/tooltipster/3.0.5/js/jquery.tooltipster.min.js"></script>
         <script src="images.js"></script>
         <script src="media.js"></script>
         <script src="nihon.js"></script>
@@ -73,13 +80,11 @@
         <script>
             $(document).ready (function() {
                 initialize();
-                setCurrentImg();
-                unsetDropdownHiding();
             });
 
-            $(window).load(function() {
+            /*$(window).load(function() { //can't remember exactly if this is necessary; candidate for removal
                 rescaleImg();
-            });
+            });*/
 
             $(window).resize(function(){
                 rescaleImg();

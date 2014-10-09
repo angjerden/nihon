@@ -1,8 +1,31 @@
-var current = 0; //current image index to be shown
+var pagetitle = "Japan 2014";
+var imagepath = "res/images/";
+var audiopath = "res/audio/";
+var videopath = "res/video/";
+
+var AudioType = {
+    OGG: "audio/ogg",
+    MP3: "audio/mpeg"
+};
+
+var VideoType = {
+    OGG: "video/ogg",
+    MP4: "video/mp4"
+};
+
+var current; //current image index to be shown
+var autoplay; //autoplay sounds (boolean)
 
 function initialize() {
+    current = 0;
     $("title").text(pagetitle);
     $("#imagestotal").text("/" + images.length);
+    $("#back").click(function() {
+        back();
+    });
+    $("#forward").click(function() {
+        forward();
+    });
     $("#imageindex").keypress(function(e) {
         handleImageIndexInput(e);
     });
@@ -11,7 +34,19 @@ function initialize() {
         'placement': 'top',
         container: 'body'
     });
+    $("#toggleautoplay").click(function() {
+        toggleAutoplay();
+    });
+    $("#toggleautoplay").tooltip({
+        container: 'body',
+        placement: 'top',
+        trigger: 'hover'
+    });
+    autoplay = true; //hack to set tooltip-text
+    toggleAutoplay(); //slightly ugly
 
+    setCurrentImg();
+    unsetDropdownHiding();
 }
 
 function back() {
@@ -65,6 +100,8 @@ function setCurrentImg() {
 
     //setting sounds and videos
     setMediaGroup(image.mediagroup);
+
+    playSoundForImage();
 }
 
 function showLoader() {
@@ -117,7 +154,7 @@ function setMediaGroup(mediagroup) {
                 var soundElement = mediaElement.sounds[soundindex];
                 var audiotype = getAudioType(soundElement.filename);
                 $("#soundmenu").append("<h6 class=\"navbar-text\">" + soundElement.title + "</h6>" +
-                        "<audio controls>" +
+                        "<audio id=\"sound" + soundindex + "\"controls>" +
                             "<source src=\"" + audiopath + soundElement.filename +
                             "\" type=\"" + audiotype + "\">" +
                         "</audio>");
@@ -126,7 +163,7 @@ function setMediaGroup(mediagroup) {
                 var videoElement = mediaElement.videos[videoindex];
                 var videotype = getVideoType(videoElement.filename);
                 $("#videomenu").append("<h6 class=\"navbar-text\">" + videoElement.title + "</h6>" +
-                    "<video width=\"320\" height=\"240\" controls>" +
+                    "<video id=\"video" + videoindex + "\" width=\"320\" height=\"240\" controls>" +
                     "<source src=\"" + videopath + videoElement.filename +
                     "\" type=\"" + videotype + "\">" +
                     "</video>");
@@ -135,20 +172,41 @@ function setMediaGroup(mediagroup) {
     }
 }
 
+function playSoundForImage() {
+    if (autoplay) {
+        console.log("Autoplay is " + autoplay + ". Playing sound");
+        $("#sound0").get(0).play();
+    }
+}
+
+function toggleAutoplay() {
+    if (autoplay) {
+        autoplay = false;
+        $("#toggleautoplay").attr("data-original-title", "Autoplay off");
+        $("#toggleautoplayicon").attr("class", "glyphicon glyphicon-volume-off");
+    } else {
+        autoplay = true;
+        $("#toggleautoplay").attr("data-original-title", "Autoplay on");
+        $("#toggleautoplayicon").attr("class", "glyphicon glyphicon-volume-up");
+    }
+}
+
 function getAudioType(filename) {
+    filename = filename.toLowerCase();
     if (filename.indexOf(".ogg") != -1) {
         return AudioType.OGG;
     }
-    if (filename.indexOf("mp3") != -1) {
+    if (filename.indexOf(".mp3") != -1) {
         return AudioType.MP3;
     }
 }
 
 function getVideoType(filename) {
+    filename = filename.toLowerCase();
     if (filename.indexOf(".ogg") != -1) {
         return VideoType.OGG;
     }
-    if (filename.indexOf("mp4") != -1) {
+    if (filename.indexOf(".mp4") != -1) {
         return VideoType.MP4;
     }
 }
