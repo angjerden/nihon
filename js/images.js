@@ -12,9 +12,9 @@ var images = [
         "mediagroup": 1
     },
     {
-        "title": "Moment of Laughter",
-        "filename": "P8036881.JPG",
-        "description": "With Toshiki and Joachim",
+        "title": "View from Ginza",
+        "filename": "20140804_073108.jpg",
+        "description": "From the Ginza Creston Hotel at the 32th floor",
         "mediagroup": 2
     }
 ];

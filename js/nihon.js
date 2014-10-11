@@ -14,6 +14,7 @@ var VideoType = {
 };
 
 var current; //current image index to be shown
+var previousMediagroup = - 1;
 var autoplay; //autoplay sounds (boolean)
 
 function initialize() {
@@ -145,28 +146,31 @@ function rescaleImg() {
 }
 
 function setMediaGroup(mediagroup) {
-    $("#soundmenu").html("");
-    $("#videomenu").html("");
-    for (var i = 0; i < media.length; i++) {
-        var mediaElement = media[i];
-        if (mediaElement.mediagroup == mediagroup) {
-            for (var soundindex = 0; soundindex < mediaElement.sounds.length; soundindex++) {
-                var soundElement = mediaElement.sounds[soundindex];
-                var audiotype = getAudioType(soundElement.filename);
-                $("#soundmenu").append("<h6 class=\"navbar-text\">" + soundElement.title + "</h6>" +
+    if (previousMediagroup != mediagroup) { //only reset mediagroup if different from previous image's
+        previousMediagroup = mediagroup;
+        $("#soundmenu").html("");
+        $("#videomenu").html("");
+        for (var i = 0; i < media.length; i++) {
+            var mediaElement = media[i];
+            if (mediaElement.mediagroup == mediagroup) {
+                for (var soundindex = 0; soundindex < mediaElement.sounds.length; soundindex++) {
+                    var soundElement = mediaElement.sounds[soundindex];
+                    var audiotype = getAudioType(soundElement.filename);
+                    $("#soundmenu").append("<h6 class=\"navbar-text\">" + soundElement.title + "</h6>" +
                         "<audio id=\"sound" + soundindex + "\"controls>" +
-                            "<source src=\"" + audiopath + soundElement.filename +
-                            "\" type=\"" + audiotype + "\">" +
+                        "<source src=\"" + audiopath + soundElement.filename +
+                        "\" type=\"" + audiotype + "\">" +
                         "</audio>");
-            }
-            for (var videoindex = 0; videoindex < mediaElement.videos.length; videoindex++) {
-                var videoElement = mediaElement.videos[videoindex];
-                var videotype = getVideoType(videoElement.filename);
-                $("#videomenu").append("<h6 class=\"navbar-text\">" + videoElement.title + "</h6>" +
-                    "<video id=\"video" + videoindex + "\" width=\"320\" height=\"240\" controls>" +
-                    "<source src=\"" + videopath + videoElement.filename +
-                    "\" type=\"" + videotype + "\">" +
-                    "</video>");
+                }
+                for (var videoindex = 0; videoindex < mediaElement.videos.length; videoindex++) {
+                    var videoElement = mediaElement.videos[videoindex];
+                    var videotype = getVideoType(videoElement.filename);
+                    $("#videomenu").append("<h6 class=\"navbar-text\">" + videoElement.title + "</h6>" +
+                        "<video id=\"video" + videoindex + "\" width=\"320\" height=\"240\" controls>" +
+                        "<source src=\"" + videopath + videoElement.filename +
+                        "\" type=\"" + videotype + "\">" +
+                        "</video>");
+                }
             }
         }
     }
