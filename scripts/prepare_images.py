@@ -6,8 +6,8 @@ maxheight = float(1080)
 maxwidth_thumb = float(356)
 maxheight_thumb = float(200)
 
-resized_suffix = "resized"
-thumb_suffix = "thumb"
+resized_suffix = "-resized"
+thumb_suffix = "-thumb"
 
 def rename_image(filename):
     filepath = dir + filename
@@ -34,9 +34,9 @@ def generate_images_js_entry(filename):
 def resize_img_and_make_thumbnail(filename):
     filepath = dir + filename
     filename_without_extension = os.path.splitext(filename)[0]
-    new_filename = filename_without_extension + "-" + resized_suffix + ".jpg"
+    new_filename = filename_without_extension + resized_suffix + ".jpg"
     new_filepath = dir + new_filename
-    thumb_filename = filename_without_extension + "-" + thumb_suffix + ".jpg"
+    thumb_filename = filename_without_extension + thumb_suffix + ".jpg"
     thumb_filepath = dir + thumb_filename
     img = Image.open(filepath)
     height = float(img.size[0])
@@ -68,7 +68,8 @@ if __name__ == '__main__':
     images_gen_js_string = "var images = [ \n"
 
     for filename in os.listdir(dir):
-        if resized_suffix in filename or thumb_suffix in filename:
+        if resized_suffix in filename or thumb_suffix in filename or \
+            "jpg" not in filename.lower():
             continue
         print(filename)
         #rename_image(filename)
