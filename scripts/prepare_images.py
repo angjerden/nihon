@@ -15,12 +15,14 @@ def rename_image(filename):
     exif_data = img._getexif()
     if exif_data is not None and 36867 in exif_data:  # The creation time
         creation_time = exif_data[36867].replace(':', '').replace(' ', '_')
-        print "\tImage creation time is {0}".format(creation_time)
+        print("\tImage creation time is {0}".format(creation_time))
         if filename.startswith('P'): #Only rename filenames starting with P
             new_filename = creation_time + "-" + filename
             new_filepath = dir + new_filename
-            print "\tRenaming {0} to {1}".format(filename, new_filename)
+            print("\tRenaming {0} to {1}".format(filename, new_filename))
             os.rename(filepath, new_filepath)
+            filename = new_filename
+    return filename
 
 def generate_images_js_entry(filename):
     output = "\t{\n"
@@ -47,7 +49,7 @@ def resize_img_and_make_thumbnail(filename):
     new_width = width * ratio
     new_image_size = new_width, new_height
 
-    print "\tMaking {0} with size {1}x{2}".format(new_filename, new_width, new_height)
+    print("\tMaking {0} with size {1}x{2}".format(new_filename, new_width, new_height))
     img.thumbnail(new_image_size, Image.ANTIALIAS)
     img.save(new_filepath, "JPEG")
 
@@ -56,7 +58,7 @@ def resize_img_and_make_thumbnail(filename):
     thumb_width = width * ratio_thumb
     thumb_size = thumb_width, thumb_height
 
-    print "\tMaking thumbnail {0} with size {1}x{2}".format(thumb_filename, thumb_width, thumb_height)
+    print("\tMaking thumbnail {0} with size {1}x{2}".format(thumb_filename, thumb_width, thumb_height))
     img.thumbnail(thumb_size, Image.ANTIALIAS)
     img.save(thumb_filepath, "JPEG")
 
@@ -72,7 +74,7 @@ if __name__ == '__main__':
             "jpg" not in filename.lower():
             continue
         print(filename)
-        #rename_image(filename)
+        filename = rename_image(filename)
         images_gen_js_string += generate_images_js_entry(filename)
         resize_img_and_make_thumbnail(filename)
 

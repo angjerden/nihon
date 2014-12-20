@@ -1,7 +1,8 @@
 var pagetitle = "Japan 2014";
-var imagepath = "res/images/";
-var audiopath = "res/audio/";
-var videopath = "res/video/";
+var resourcepath = "res/";
+var imagepath = resourcepath + "images/";
+var audiopath = resourcepath + "audio/";
+var videopath = resourcepath + "video/";
 
 var AudioType = {
     OGG: "audio/ogg",
@@ -69,7 +70,7 @@ function setImageIndexToCurrent() {
 }
 
 function handleImageIndexInput(e) {
-    if (e.which == 13) {//Enter key
+    if (e.which == 13) {//the "Enter" key
         var inputIndex = $("#imageindex").val();
         if (inputIndex > 0 && inputIndex <= images.length) {
             current = inputIndex - 1;

@@ -1,4 +1,4 @@
 nihon
 =====
 
-Nihon is an attempt at making a web-based picture, sound and video-monstrator.
+Nihon is a web-based picture, sound and video-monstrator.
