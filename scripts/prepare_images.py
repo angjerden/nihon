@@ -41,8 +41,8 @@ def resize_img_and_make_thumbnail(filename):
     thumb_filename = filename_without_extension + thumb_suffix + ".jpg"
     thumb_filepath = dir + thumb_filename
     img = Image.open(filepath)
-    height = float(img.size[0])
-    width = float(img.size[1])
+    width = float(img.size[0])
+    height = float(img.size[1])
 
     ratio = min(maxwidth/width, maxheight/height)
     new_height = height * ratio
