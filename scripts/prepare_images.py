@@ -1,4 +1,5 @@
 from PIL import Image
+from PIL import ExifTags
 import os
 
 maxwidth = float(1920)
@@ -9,19 +10,19 @@ maxheight_thumb = float(200)
 resized_suffix = "-resized"
 thumb_suffix = "-thumb"
 
-def rename_image(filename):
+def rename_image_with_timestamp(dir, filename):
     filepath = dir + filename
     img = Image.open(filepath)
-    exif_data = img._getexif()
-    if exif_data is not None and 36867 in exif_data:  # The creation time
-        creation_time = exif_data[36867].replace(':', '').replace(' ', '_')
-        print("\tImage creation time is {0}".format(creation_time))
-        if filename.startswith('P'): #Only rename filenames starting with P
-            new_filename = creation_time + "-" + filename
-            new_filepath = dir + new_filename
-            print("\tRenaming {0} to {1}".format(filename, new_filename))
-            os.rename(filepath, new_filepath)
-            filename = new_filename
+
+    creation_time = get_creation_time(img)
+    print("\tImage creation time is {0}".format(creation_time))
+    if filename.startswith('P'): #Only rename filenames starting with P
+        new_filename = creation_time + "-" + filename
+        new_filepath = dir + new_filename
+        print("\tRenaming {0} to {1}".format(filename, new_filename))
+        os.rename(filepath, new_filepath)
+        filename = new_filename
+    print get_rotation(img)
     return filename
 
 def generate_images_js_entry(filename):
@@ -33,14 +34,20 @@ def generate_images_js_entry(filename):
     output += "\t},\n"
     return output
 
-def resize_img_and_make_thumbnail(filename):
-    filepath = dir + filename
+def resize_img_and_make_thumbnail(dir, filename):
     filename_without_extension = os.path.splitext(filename)[0]
     new_filename = filename_without_extension + resized_suffix + ".jpg"
-    new_filepath = dir + new_filename
     thumb_filename = filename_without_extension + thumb_suffix + ".jpg"
-    thumb_filepath = dir + thumb_filename
+
+    generate_image_with_bounds(maxwidth, maxheight, filename, dir, new_filename)
+    #generate_image_with_bounds(maxwidth_thumb, maxheight_thumb, filename, dir, thumb_filename)
+
+def generate_image_with_bounds(maxwidth, maxheight, filename, dir, new_filename):
+    filepath = dir + filename
+    new_filepath = dir + new_filename
+
     img = Image.open(filepath)
+    rotation = get_rotation(img)
     width = float(img.size[0])
     height = float(img.size[1])
 
@@ -50,19 +57,30 @@ def resize_img_and_make_thumbnail(filename):
     new_image_size = new_width, new_height
 
     print("\tMaking {0} with size {1}x{2}".format(new_filename, new_width, new_height))
+    if rotation is not None:
+        img = img.rotate(rotation, expand=True)
     img.thumbnail(new_image_size, Image.ANTIALIAS)
     img.save(new_filepath, "JPEG")
 
-    ratio_thumb = min(maxwidth_thumb/width, maxheight_thumb/height)
-    thumb_height = height * ratio_thumb
-    thumb_width = width * ratio_thumb
-    thumb_size = thumb_width, thumb_height
+def get_creation_time(img):
+    exif_data = img._getexif()
+    if exif_data is not None:
+        if 36867 in exif_data:  # The creation time
+            return exif_data[36867].replace(':', '').replace(' ', '_')
 
-    print("\tMaking thumbnail {0} with size {1}x{2}".format(thumb_filename, thumb_width, thumb_height))
-    img.thumbnail(thumb_size, Image.ANTIALIAS)
-    img.save(thumb_filepath, "JPEG")
-
-
+def get_rotation(img):
+    for orientation in ExifTags.TAGS.keys():
+        if ExifTags.TAGS[orientation] == 'Orientation':
+            break
+    exif_data = img._getexif()
+    if exif_data is not None:
+        if orientation in exif_data:
+            if exif_data[orientation] == 3:
+                return 180
+            elif exif_data[orientation] == 6:
+                return 270
+            elif exif_data[orientation] == 8:
+                return 90
 
 if __name__ == '__main__':
     dir = '../res/images/'
@@ -74,9 +92,9 @@ if __name__ == '__main__':
             "jpg" not in filename.lower():
             continue
         print(filename)
-        filename = rename_image(filename)
+        filename = rename_image_with_timestamp(dir, filename)
         images_gen_js_string += generate_images_js_entry(filename)
-        resize_img_and_make_thumbnail(filename)
+        resize_img_and_make_thumbnail(dir, filename)
 
     images_gen_js_string = images_gen_js_string[:-2] + "\n];" # remove trailing comma
     images_gen_js_file.write(images_gen_js_string)
