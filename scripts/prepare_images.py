@@ -37,10 +37,12 @@ def generate_images_js_entry(filename):
 def resize_img_and_make_thumbnail(dir, filename):
     filename_without_extension = os.path.splitext(filename)[0]
     new_filename = filename_without_extension + resized_suffix + ".jpg"
-    thumb_filename = filename_without_extension + thumb_suffix + ".jpg"
-
     generate_image_with_bounds(maxwidth, maxheight, filename, dir, new_filename)
+
+    thumb_filename = filename_without_extension + thumb_suffix + ".jpg"
     #generate_image_with_bounds(maxwidth_thumb, maxheight_thumb, filename, dir, thumb_filename)
+
+    return new_filename
 
 def generate_image_with_bounds(maxwidth, maxheight, filename, dir, new_filename):
     filepath = dir + filename
@@ -60,7 +62,7 @@ def generate_image_with_bounds(maxwidth, maxheight, filename, dir, new_filename)
     if rotation is not None:
         img = img.rotate(rotation, expand=True)
     img.thumbnail(new_image_size, Image.ANTIALIAS)
-    img.save(new_filepath, "JPEG")
+    img.save(new_filepath, "JPEG")#, quality=95)
 
 def get_creation_time(img):
     exif_data = img._getexif()
@@ -84,7 +86,7 @@ def get_rotation(img):
 
 if __name__ == '__main__':
     dir = '../res/images/'
-    images_gen_js_file = open("../js/images_gen.js", "w")
+    images_gen_js_file = open("../js/images.js", "w")
     images_gen_js_string = "var images = [ \n"
 
     for filename in os.listdir(dir):
@@ -93,8 +95,8 @@ if __name__ == '__main__':
             continue
         print(filename)
         filename = rename_image_with_timestamp(dir, filename)
+        filename = resize_img_and_make_thumbnail(dir, filename)
         images_gen_js_string += generate_images_js_entry(filename)
-        resize_img_and_make_thumbnail(dir, filename)
 
     images_gen_js_string = images_gen_js_string[:-2] + "\n];" # remove trailing comma
     images_gen_js_file.write(images_gen_js_string)
