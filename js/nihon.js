@@ -140,7 +140,7 @@ function hideLoader() {
 function rescaleImg() {
     var image = $('#main-image');
     var wwidth = $(window).width();
-    var wheight = $(window).height();
+    var wheight = $(window).height() - 55; // hack to avoid image clipping
     var iwidth = image.width();
     var iheight = image.height();
     var factor = Math.min(wwidth/iwidth, wheight/iheight);
