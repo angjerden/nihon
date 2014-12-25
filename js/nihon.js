@@ -28,6 +28,7 @@ function initialize() {
     $("#forward").click(function() {
         forward();
     });
+    enableLeftRightKeyboardNavigation();
     $("#imageindex").keypress(function(e) {
         handleImageIndexInput(e);
     });
@@ -63,6 +64,17 @@ function forward() {
         current = current + 1;
         setCurrentImg();
     }
+}
+
+function enableLeftRightKeyboardNavigation() {
+    $("body").keydown(function(e) {
+      if(e.keyCode == 37) { // left
+        back();
+      }
+      else if(e.keyCode == 39) { // right
+        forward();
+      }
+    });
 }
 
 function setImageIndexToCurrent() {
