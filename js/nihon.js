@@ -177,20 +177,32 @@ function setMediaGroup(mediagroup) {
                 }
                 for (var videoindex = 0; videoindex < mediaElement.videos.length; videoindex++) {
                     var videoElement = mediaElement.videos[videoindex];
-                    var videotype = getVideoType(videoElement.filename);
-                    $("#videomenu").append("<h6 class=\"navbar-text\">" + videoElement.title + "</h6>" +
-                        "<video id=\"video" + videoindex + "\" width=\"320\" height=\"240\" controls>" +
-                        "<source src=\"" + videopath + videoElement.filename +
-                        "\" type=\"" + videotype + "\">" +
-                        "</video>");
+                    if (videoElement.filename.indexOf("youtube") >= 0) { //appending embedded youtube video
+                        $("#videomenu").append("<li class=\"navbar-text\">" + videoElement.title + " " + videoElement.filename + "</li>");
+                    }
+                    else {
+                        var videotype = getVideoType(videoElement.filename);
+                        $("#videomenu").append("<h6 class=\"navbar-text\">" + videoElement.title + "</h6>" +
+                            "<video id=\"video" + videoindex + "\" width=\"320\" height=\"240\" controls>" +
+                            "<source src=\"" + videopath + videoElement.filename +
+                            "\" type=\"" + videotype + "\">" +
+                            "</video>");
+                    }
+
                 }
             }
+        }
+        if ($("#soundmenu").html() == "") {
+            $("#soundmenu").html("<li class=\"navbar-text\">No sounds here...</li>");
+        }
+        if ($("#videomenu").html() == "") {
+            $("#videomenu").html("<li class=\"navbar-text\">No videos here...</li>");
         }
     }
 }
 
 function playSoundForImage() {
-    if (autoplay) {
+    if (autoplay && $("#sound0").length){ //checking for existence of sound0
         console.log("Autoplay is " + autoplay + ". Playing sound");
         $("#sound0").get(0).play();
     }

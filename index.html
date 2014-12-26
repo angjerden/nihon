@@ -61,9 +61,6 @@
                         <span class="glyphicon glyphicon-music"></span> Sounds
                     </a>
                     <ul id="soundmenu" class="navbar-inverse dropdown-menu dropup" role="menu">
-                        <li class="navbar-text">Sound 1</li>
-                        <li class="navbar-text">Sound 2</li>
-                        <li class="navbar-text">Sound 3</li>
                     </ul>
                 </li>
                 <li id="videodropdown" class="dropdown">
@@ -71,9 +68,6 @@
                         <span class="glyphicon glyphicon-film"></span> Videos
                     </a>
                     <ul id="videomenu" class="navbar-inverse dropdown-menu dropup" role="menu">
-                        <li class="navbar-text">Video 1</li>
-                        <li class="navbar-text">Video 2</li>
-                        <li class="navbar-text">Video 3</li>
                     </ul>
                 </li>
             </ul>
@@ -88,10 +82,6 @@
             $(document).ready (function() {
                 initialize();
             });
-
-            /*$(window).load(function() { //can't remember exactly if this is necessary; candidate for removal
-                rescaleImg();
-            });*/
 
             $(window).resize(function(){
                 rescaleImg();
