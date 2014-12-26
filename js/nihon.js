@@ -162,7 +162,9 @@ function setMediaGroup(mediagroup) {
     if (previousMediagroup != mediagroup) { //only reset mediagroup if different from previous image's
         previousMediagroup = mediagroup;
         $("#soundmenu").html("");
+        $("#soundlink").html("<span class=\"glyphicon glyphicon-music\"></span> Sounds");
         $("#videomenu").html("");
+        $("#videolink").html("<span class=\"glyphicon glyphicon-film\"></span> Videos");
         for (var i = 0; i < media.length; i++) {
             var mediaElement = media[i];
             if (mediaElement.mediagroup == mediagroup) {
@@ -194,9 +196,11 @@ function setMediaGroup(mediagroup) {
         }
         if ($("#soundmenu").html() == "") {
             $("#soundmenu").html("<li class=\"navbar-text\">No sounds here...</li>");
+            $("#soundlink").html("");
         }
         if ($("#videomenu").html() == "") {
             $("#videomenu").html("<li class=\"navbar-text\">No videos here...</li>");
+            $("#videolink").html("");
         }
     }
 }
