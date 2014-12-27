@@ -91,7 +91,7 @@ if __name__ == '__main__':
 
     for filename in os.listdir(dir):
         if resized_suffix in filename or thumb_suffix in filename or \
-            "jpg" not in filename.lower():
+            "jpg" not in filename.lower() or "png" not in filename.lower():
             continue
         filename = rename_image_with_timestamp(dir, filename)
 
@@ -99,7 +99,7 @@ if __name__ == '__main__':
     filenames.sort() #sorting to get alphanumerical order
     for filename in filenames:
         if resized_suffix in filename or thumb_suffix in filename or \
-            "jpg" not in filename.lower():
+            "jpg" not in filename.lower() or "png" not in filename.lower():
             continue
         print("Resizing {}".format(filename))
         filename = resize_img_and_make_thumbnail(dir, filename)
