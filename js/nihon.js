@@ -19,6 +19,10 @@ var previousMediagroup = - 1;
 var autoplay; //autoplay sounds (boolean)
 
 function initialize() {
+    $(window).resize(function(){
+        rescaleImg();
+    });
+
     current = 0;
     $("title").text(pagetitle);
     $("#imagestotal").text("/" + images.length);
@@ -29,6 +33,7 @@ function initialize() {
         forward();
     });
     enableLeftRightKeyboardNavigation();
+    enableSwiping();
     $("#imageindex").keypress(function(e) {
         handleImageIndexInput(e);
     });
@@ -74,6 +79,16 @@ function enableLeftRightKeyboardNavigation() {
       else if(e.keyCode == 39) { // right
         forward();
       }
+    });
+}
+
+function enableSwiping() {
+    $("body").on("swipeleft", function(){
+        back();
+
+    });
+    $("body").on("swiperight", function(){
+        forward();
     });
 }
 
