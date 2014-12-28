@@ -84,11 +84,11 @@ function enableLeftRightKeyboardNavigation() {
 
 function enableSwiping() {
     $("body").on("swipeleft", function(){
-        back();
+        forward();
 
     });
     $("body").on("swiperight", function(){
-        forward();
+        back();
     });
 }
 
